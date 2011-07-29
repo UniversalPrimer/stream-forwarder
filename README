@@ -1,0 +1,7 @@
+This program runs on the streaming server.
+
+It receives streams and forwards each stream both to the RTMP server and to the storage server.
+
+It is written in Ruby using Event Machine.
+
+Future versions will support SSL, authentication, more output targets (for other types of streams than RTMP) and possibly UDP.
