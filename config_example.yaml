@@ -1,0 +1,10 @@
+
+
+listen_host: 0.0.0.0
+listen_port: 4444
+
+storage_host: 172.16.64.1
+storage_port: 12345
+
+rtmp_host: 127.0.0.1
+rtmp_port: 6666

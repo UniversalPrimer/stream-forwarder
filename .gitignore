@@ -1,3 +1,5 @@
+config.yml # per-machine file to be excluded
+
 # Emacs backup files #
 ######################
 *~
