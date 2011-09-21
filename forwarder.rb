@@ -83,10 +83,10 @@ module StreamReceiver
     port, ip = Socket.unpack_sockaddr_in(get_peername)
     puts "connection from #{ip}:#{port}"
 
-    @storage_forwarder = EventMachine::connect $config['storage_host'], $config['storage_port'], StorageForwarder, self
+    @storage_forwarder = EM::connect $config['storage_host'], $config['storage_port'], StorageForwarder, self
     @storage_forwarder.set_pending_connect_timeout(7) # set timeout to 7 seconds
 
-    @rtmp_forwarder = EventMachine::connect $config['rtmp_host'], $config['rtmp_port'], RTMPForwarder, self
+    @rtmp_forwarder = EM::connect $config['rtmp_host'], $config['rtmp_port'], RTMPForwarder, self
     @rtmp_forwarder.set_pending_connect_timeout(7) # set timeout to 7 seconds
     @timer = nil
   end
@@ -128,6 +128,7 @@ module StreamReceiver
   def finish
     @timer.cancel if @timer
     @storage_forwarder.finish
+    @rtmp_forwarder.finish
     close_connection_after_writing
   end
 
@@ -140,9 +141,9 @@ end
 
 $config = YAML.load_file('config.yaml')
 
-EventMachine::run do
+EM::run do
 
-  EventMachine::start_server $config['listen_host'], $config['listen_port'], StreamReceiver
+  EM::start_server $config['listen_host'], $config['listen_port'], StreamReceiver
   puts "Stream Server started on #{$config['listen_host']}:#{$config['listen_port']}"
 
 end
